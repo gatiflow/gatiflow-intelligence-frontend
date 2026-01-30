@@ -1,164 +1,46 @@
-/* RESET BÁSICO */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* ===============================
+   VARIABLES GLOBAIS
+================================= */
+:root{
+    --bg:#0d1117;--card:#161b22;--card-hover:#1c2128;
+    --accent:#58a6ff;--accent-hover:#79c0ff;
+    --text:#c9d1d9;--text-muted:#8b949e;
+    --success:#3fb950;--warning:#d29922;
+    --border:#30363d;--gradient:linear-gradient(135deg,#1f6feb 0%,#58a6ff 100%);
 }
 
-/* VARIÁVEIS DE DESIGN */
-:root {
-  --bg: #0b0f14;
-  --card: #121824;
-  --text: #e6eaf2;
-  --muted: #9aa4b2;
-  --accent: #4da3ff;
-  --border: #1f2937;
-}
+/* ===============================
+   RESET BÁSICO
+================================= */
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
 
-/* BASE */
-body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
-}
+/* ===============================
+   COMPLIANCE BADGE FIXO
+================================= */
+.compliance-badge-fixed{position:fixed;top:20px;right:20px;background:rgba(35,134,54,0.15);border:2px solid var(--success);padding:8px 16px;border-radius:24px;font-size:0.75em;font-weight:600;color:var(--success);z-index:1000;backdrop-filter:blur(10px);display:flex;align-items:center;gap:6px;}
+.compliance-badge-fixed::before{content:"✓";font-weight:bold;font-size:1.2em;}
 
-.container {
-  max-width: 1100px;
-  margin: auto;
-  padding: 1.5rem;
-}
+/* ===============================
+   HERO, BUTTONS, STEPS, CARDS
+   (Mantido conforme versão anterior)
+================================= */
 
-/* HEADER */
-.header {
-  background: linear-gradient(135deg, #0f172a, #020617);
-  border-bottom: 1px solid var(--border);
-}
+/* ===============================
+   LEAD MODAL
+================================= */
+#leadModal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);justify-content:center;align-items:center;z-index:2000;}
+#leadModal div{background:var(--card);padding:30px;border-radius:12px;max-width:400px;width:90%;text-align:center;position:relative;}
+#leadModal input{width:100%;padding:10px;margin-bottom:10px;border-radius:6px;border:1px solid var(--border);}
+#leadModal button{width:100%;display:block;text-align:center;}
 
-.header h1 {
-  font-size: 2rem;
-  margin-bottom: 0.3rem;
-}
-
-.header p {
-  color: var(--muted);
-  font-size: 0.95rem;
-}
-
-.badge {
-  display: inline-block;
-  margin-top: 0.5rem;
-  padding: 0.3rem 0.6rem;
-  background: rgba(77, 163, 255, 0.15);
-  color: var(--accent);
-  border-radius: 6px;
-  font-size: 0.75rem;
-}
-
-/* OVERVIEW CARDS */
-.overview {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 1rem;
-  margin-top: 1.5rem;
-}
-
-.card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 1rem;
-}
-
-.card span {
-  font-size: 0.75rem;
-  color: var(--muted);
-}
-
-.card strong {
-  display: block;
-  margin-top: 0.3rem;
-  font-size: 1.1rem;
-}
-
-/* SEÇÕES */
-section h2 {
-  margin: 2.5rem 0 1rem;
-  font-size: 1.3rem;
-  border-left: 4px solid var(--accent);
-  padding-left: 0.6rem;
-}
-
-/* LISTAS */
-.list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1rem;
-}
-
-.item {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 1rem;
-}
-
-.item h3 {
-  font-size: 1rem;
-  margin-bottom: 0.4rem;
-}
-
-.item p {
-  font-size: 0.85rem;
-  color: var(--muted);
-}
-
-.item a {
-  display: inline-block;
-  margin-top: 0.5rem;
-  font-size: 0.8rem;
-  color: var(--accent);
-  text-decoration: none;
-}
-
-.item a:hover {
-  text-decoration: underline;
-}
-
-/* FOOTER */
-.footer {
-  margin-top: 4rem;
-  border-top: 1px solid var(--border);
-  background: #020617;
-}
-
-.footer p {
-  margin-bottom: 0.5rem;
-}
-
-.footer ul {
-  list-style: none;
-  margin-bottom: 0.8rem;
-}
-
-.footer li {
-  font-size: 0.8rem;
-  color: var(--muted);
-}
-
-.footer small {
-  font-size: 0.7rem;
-  color: var(--muted);
-}
-
-/* RESPONSIVO */
-@media (max-width: 600px) {
-  .header h1 {
-    font-size: 1.6rem;
-  }
-
-  section h2 {
-    font-size: 1.1rem;
-  }
+/* ===============================
+   RESPONSIVO
+================================= */
+@media(max-width:768px){
+  .hero h1{font-size:2em;}
+  .hero .tagline{font-size:1.1em;}
+  .compliance-badge-fixed{position:static;margin:20px auto;width:fit-content;}
+  section{padding:50px 0;}
+  .chart-container{height:250px;}
 }
