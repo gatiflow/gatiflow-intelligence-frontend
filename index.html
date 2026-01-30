@@ -2,23 +2,60 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>GatiFlow – Executive Intelligence Report</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GatiFlow — Data Intelligence</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <header>
-    <h1>GatiFlow</h1>
-    <p>Executive Market & Talent Intelligence</p>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container">
+      <h1 id="api-name">GatiFlow</h1>
+      <p id="api-subtitle">Data Intelligence from Public Tech Ecosystems</p>
+      <span id="api-version" class="badge"></span>
+    </div>
   </header>
 
-  <main id="content">
-    <p class="loading">Loading executive report…</p>
-  </main>
+  <!-- OVERVIEW -->
+  <section class="overview container">
+    <div class="card">
+      <span>Collection Date</span>
+      <strong id="collection-date">—</strong>
+    </div>
+    <div class="card">
+      <span>UTC Time</span>
+      <strong id="collection-time">—</strong>
+    </div>
+    <div class="card">
+      <span>Total Signals</span>
+      <strong id="total-points">—</strong>
+    </div>
+    <div class="card">
+      <span>Next Update</span>
+      <strong id="next-update">—</strong>
+    </div>
+  </section>
 
-  <footer>
-    <p>© GatiFlow – Confidential Executive Preview</p>
+  <!-- MARKET TRENDS -->
+  <section class="container">
+    <h2>Market Trends</h2>
+    <div id="market-trends" class="list"></div>
+  </section>
+
+  <!-- TOP PLAYERS -->
+  <section class="container">
+    <h2>Key Players & Influencers</h2>
+    <div id="top-candidates" class="list"></div>
+  </section>
+
+  <!-- FOOTER / COMPLIANCE -->
+  <footer class="footer">
+    <div class="container">
+      <p><strong>Compliance</strong></p>
+      <ul id="compliance-list"></ul>
+      <small>Public data only • No PII collected</small>
+    </div>
   </footer>
 
   <script src="app.js"></script>
