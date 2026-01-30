@@ -1,291 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GatiFlow | Public Market Intelligence API</title>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-
-    <style>
-        :root {
-            --bg: #0d1117;
-            --card: #161b22;
-            --card-hover: #1c2128;
-            --accent: #58a6ff;
-            --accent-hover: #79c0ff;
-            --text: #c9d1d9;
-            --text-muted: #8b949e;
-            --success: #3fb950;
-            --warning: #d29922;
-            --border: #30363d;
-            --gradient: linear-gradient(135deg, #1f6feb 0%, #58a6ff 100%);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-        }
-
-        /* Compliance Badge */
-        .compliance-badge-fixed {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(35, 134, 54, 0.15);
-            border: 2px solid var(--success);
-            padding: 8px 16px;
-            border-radius: 24px;
-            font-size: 0.75em;
-            font-weight: 600;
-            color: var(--success);
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        header {
-            padding: 40px 0 20px;
-            text-align: center;
-        }
-
-        .logo {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 20px;
-        }
-
-        /* Hero */
-        .hero {
-            text-align: center;
-            padding: 60px 0 80px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .hero h1 {
-            font-size: 3em;
-            margin-bottom: 20px;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            line-height: 1.2;
-        }
-
-        .hero .tagline {
-            font-size: 1.2em;
-            margin-bottom: 15px;
-        }
-
-        .hero .subtitle {
-            font-size: 1em;
-            color: var(--text-muted);
-            max-width: 760px;
-            margin: 0 auto 40px;
-        }
-
-        .cta-group {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 12px 28px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95em;
-            border: 1px solid;
-            transition: all 0.2s;
-        }
-
-        .btn-primary {
-            background: var(--accent);
-            color: #0d1117;
-            border-color: var(--accent);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--accent);
-            border-color: var(--accent);
-        }
-
-        section {
-            padding: 80px 0;
-            border-bottom: 1px solid var(--border);
-        }
-
-        section h2 {
-            text-align: center;
-            font-size: 2.2em;
-            margin-bottom: 15px;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: var(--text-muted);
-            margin-bottom: 50px;
-        }
-
-        /* Dashboard */
-        .dashboard-demo {
-            background: var(--card);
-            border-radius: 12px;
-            padding: 40px;
-            border: 1px solid var(--border);
-        }
-
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-
-        .data-source-badge {
-            font-size: 0.75em;
-            color: var(--text-muted);
-            background: rgba(88, 166, 255, 0.1);
-            padding: 6px 12px;
-            border-radius: 16px;
-            border: 1px solid var(--border);
-        }
-
-        .chart-container {
-            height: 300px;
-            margin: 30px 0;
-        }
-
-        footer {
-            padding: 60px 0;
-            text-align: center;
-            background: var(--card);
-            border-top: 1px solid var(--border);
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-
-        .footer-links a {
-            color: var(--accent);
-            text-decoration: none;
-        }
-
-        footer p {
-            font-size: 0.9em;
-            color: var(--text-muted);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GatiFlow | Compliant Data Intelligence API</title>
+<!-- Link do CSS principal -->
+<link rel="stylesheet" href="style.css">
+<!-- Chart.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 </head>
-
 <body>
 
-<div class="compliance-badge-fixed">
-    Public Data Only • GDPR & LGPD Aligned
-</div>
+<!-- ===============================
+     FIXED COMPLIANCE BADGE
+================================= -->
+<div class="compliance-badge-fixed">GDPR/LGPD COMPLIANT</div>
 
+<!-- ===============================
+     HEADER / LOGO
+================================= -->
 <header>
     <div class="container">
+        <!-- Troque "logo-gatiflow.png" pelo seu logo real -->
         <img src="logo-gatiflow.png" alt="GatiFlow Logo" class="logo">
     </div>
 </header>
 
+<!-- ===============================
+     HERO SECTION
+================================= -->
 <section class="hero">
     <div class="container">
-        <h1>Public Market Intelligence API<br>Compliance-First by Design</h1>
-
-        <p class="tagline">
-            Actionable market intelligence derived exclusively from public, auditable sources.
-        </p>
-
-        <p class="subtitle">
-            GatiFlow delivers structured intelligence for decision-makers using only publicly
-            accessible data. No personal data. No private profiles. Full legal traceability.
-        </p>
-
+        <h1>Data Intelligence API<br>Built on Ethics</h1>
+        <p class="tagline">Transform public web flows into verified, compliant business intelligence</p>
+        <p class="subtitle">Enterprise-grade data pipelines with built-in GDPR/LGPD compliance. No personal information, only strategic market insights from public sources.</p>
+        
         <div class="cta-group">
-            <a href="#pricing" class="btn btn-primary">Request Access</a>
-            <a href="compliance.html" class="btn btn-secondary">Ethics & Compliance</a>
+            <a href="#" class="btn btn-primary">Start Free Trial</a>
+            <a href="compliance.html" class="btn btn-secondary">View Ethics Protocol</a>
+        </div>
+
+        <!-- ===============================
+             TRUST INDICATORS
+        ================================= -->
+        <div class="trust-bar">
+            <div class="trust-item"><div class="icon">🔓</div><h3>100% Public Data</h3><p>Only publicly available sources</p></div>
+            <div class="trust-item"><div class="icon">🛡️</div><h3>Privacy-First</h3><p>Zero personal information</p></div>
+            <div class="trust-item"><div class="icon">✓</div><h3>Audit-Ready</h3><p>Complete source transparency</p></div>
+            <div class="trust-item"><div class="icon">⚖️</div><h3>Compliant by Design</h3><p>GDPR & LGPD certified</p></div>
         </div>
     </div>
 </section>
 
-<section>
+<!-- ===============================
+     HOW IT WORKS
+================================= -->
+<section id="how-it-works">
     <div class="container">
-        <h2>Sample Intelligence Report</h2>
-        <p class="section-subtitle">
-            Example of structured intelligence delivered through the GatiFlow API.
-        </p>
+        <h2>How GatiFlow Works</h2>
+        <p class="section-subtitle">Ethical data intelligence in four transparent steps</p>
+        
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Public Sources Only</h3>
+                <p>We exclusively monitor publicly accessible data from verified sources like GitHub, StackOverflow, and official job boards. No private databases, no personal accounts.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Automated Compliance</h3>
+                <p>Every data point passes through our compliance engine that verifies licensing, respects robots.txt, and implements rate limiting to protect source servers.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Structure & Verify</h3>
+                <p>Raw data is cleaned, structured, and cross-referenced. We add metadata about source, timestamp, and verification status for complete auditability.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>Secure API Delivery</h3>
+                <p>Access intelligence through our RESTful API with authentication, rate limits, and usage monitoring. Enterprise SLAs available.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
+<!-- ===============================
+     DASHBOARD DEMO
+================================= -->
+<section id="demo">
+    <div class="container">
+        <h2>Live Market Intelligence</h2>
+        <p class="section-subtitle">Real-time data from public tech communities</p>
+        
         <div class="dashboard-demo">
             <div class="dashboard-header">
-                <h3>Technology Demand Signals</h3>
-                <span class="data-source-badge">
-                    Sources: Public GitHub, Job Boards, RSS Feeds
-                </span>
+                <h3>Tech Skills Demand Trends</h3>
+                <span class="data-source-badge">Sources: GitHub Jobs, StackOverflow, LinkedIn Public Posts</span>
             </div>
-
+            
             <div class="chart-container">
                 <canvas id="demandChart"></canvas>
             </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-value">+42%</div><div class="stat-label">Python/AI Growth</div></div>
+                <div class="stat-card"><div class="stat-value">+28%</div><div class="stat-label">Data Engineering</div></div>
+                <div class="stat-card"><div class="stat-value">+15%</div><div class="stat-label">Cloud/AWS</div></div>
+                <div class="stat-card"><div class="stat-value">100%</div><div class="stat-label">Compliance Rate</div></div>
+            </div>
         </div>
     </div>
 </section>
 
-<footer>
-    <div class="container">
-        <div class="footer-links">
-            <a href="compliance.html">Ethics Protocol</a>
-            <a href="gatiflow_api.json">Technical Specification</a>
-            <a href="mailto:gatiflow@proton.me">Contact</a>
-        </div>
+<!-- ===============================
+     LEAD CAPTURE MODAL
+================================= -->
+<div id="leadModal">
+  <div>
+    <h3 style="margin-bottom:15px;">Start Your Free Trial</h3>
+    <form id="leadForm">
+      <input type="text" id="leadName" placeholder="Full Name" required>
+      <input type="email" id="leadEmail" placeholder="Email Address" required>
+      <input type="text" id="leadCompany" placeholder="Company (optional)">
+      <button type="submit" class="btn btn-primary">Request Access</button>
+    </form>
+    <span id="closeModal" style="position:absolute; top:10px; right:15px; cursor:pointer; font-weight:bold;">×</span>
+  </div>
+</div>
 
-        <p>
-            © 2026 GatiFlow Intelligence Systems — Public Data Intelligence
-        </p>
-    </div>
-</footer>
-
-<script>
-const ctx = document.getElementById('demandChart').getContext('2d');
-new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-        datasets: [{
-            label: 'AI / Python Demand Index',
-            data: [65, 72, 78, 85, 89, 92],
-            borderColor: '#3fb950',
-            backgroundColor: 'rgba(63,185,80,0.15)',
-            fill: true,
-            tension: 0.4
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            legend: { display: false }
-        }
-    }
-});
-</script>
-
+<!-- Script principal -->
+<script src="script.js"></script>
 </body>
 </html>
