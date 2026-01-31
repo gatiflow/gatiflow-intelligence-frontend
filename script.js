@@ -32,7 +32,6 @@ leadForm.addEventListener('submit', e => {
    CHART.JS DEMO
 ================================= */
 const ctx = document.getElementById('demandChart')?.getContext('2d');
-
 let demandChart;
 
 function initChart(initialData) {
@@ -61,19 +60,33 @@ function initChart(initialData) {
         },
         options: {
             responsive: true,
-            plugins: { legend: { labels: { color: '#c9d1d9' } } },
+            plugins: {
+                legend: { labels: { color: '#c9d1d9' } },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const score = context.raw;
+                            let badge = '';
+                            if (score >= 90) badge = ' 🏆 Liderança';
+                            else if (score >= 80) badge = ' ⭐ Sênior';
+                            else if (score >= 70) badge = ' ⚡ Pleno';
+                            else badge = ' 🔹 Júnior';
+                            return `${context.dataset.label}: ${score}${badge}`;
+                        }
+                    }
+                }
+            },
             scales: { x: { ticks: { color: '#8b949e' } }, y: { ticks: { color: '#8b949e' } } }
         }
     });
 }
 
 /* ===============================
-   INSIGHTS EM TEMPO REAL
+   INSIGHTS EM TEMPO REAL COM BADGES
 ================================= */
-// Cria container no dashboard para insights
 const dashboardContainer = document.querySelector('.dashboard-demo');
-
 let insightsContainer = document.getElementById('insightsContainer');
+
 if (!insightsContainer) {
     insightsContainer = document.createElement('div');
     insightsContainer.id = 'insightsContainer';
@@ -81,29 +94,28 @@ if (!insightsContainer) {
     insightsContainer.style.backgroundColor = '#161b22';
     insightsContainer.style.padding = '15px';
     insightsContainer.style.borderRadius = '8px';
-    insightsContainer.style.maxHeight = '200px';
+    insightsContainer.style.maxHeight = '220px';
     insightsContainer.style.overflowY = 'auto';
     insightsContainer.innerHTML = `<h4 style="color:#58a6ff;margin-bottom:10px;">Strategic Insights (Real-Time)</h4>`;
     dashboardContainer.appendChild(insightsContainer);
 }
 
-function updateInsights(newTalents) {
-    const insights = newTalents.map(t => {
-        let text = `${t.username} (${t.role}) score: ${t.score}`;
-        if (t.score >= 90) text += ' → Liderança técnica detectada';
-        else if (t.score >= 80) text += ' → Sênior';
-        else if (t.score >= 70) text += ' → Pleno';
-        else text += ' → Júnior';
-        return text;
-    });
+function getBadge(score) {
+    if (score >= 90) return '🏆 Liderança';
+    if (score >= 80) return '⭐ Sênior';
+    if (score >= 70) return '⚡ Pleno';
+    return '🔹 Júnior';
+}
 
+function updateInsights(newTalents) {
     // Remove insights antigos
     Array.from(insightsContainer.querySelectorAll('p')).forEach(p => p.remove());
 
-    // Adiciona apenas os 5 últimos insights
-    insights.slice(-5).reverse().forEach(text => {
+    // Adiciona últimos 5 insights com badges
+    newTalents.slice(-5).reverse().forEach(t => {
         const p = document.createElement('p');
-        p.textContent = text;
+        const badge = getBadge(t.score);
+        p.innerHTML = `<strong>${t.username}</strong> (${t.role}) - ${t.score} <span style="color:#79c0ff;">${badge}</span>`;
         p.style.color = '#c9d1d9';
         p.style.margin = '4px 0';
         insightsContainer.appendChild(p);
