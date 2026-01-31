@@ -45,6 +45,8 @@ async function fetchReportPreview(limit = 6) {
 /* ===============================
    POPULA DASHBOARD AVANÇADO
 ================================= */
+let dashboardChart = null; // Referência global do Chart.js
+
 async function populateDashboardAdvanced() {
     const report = await fetchReportPreview();
 
@@ -88,22 +90,20 @@ async function populateDashboardAdvanced() {
     const ctx = document.getElementById('demandChart')?.getContext('2d');
     if (ctx) {
         // Preparar dados para line chart (score médio por mês fictício)
-        // Apenas exemplo: gerar tendência fictícia baseada no score médio
         const months = ['Jan','Feb','Mar','Apr','May','Jun'];
         const avgScoreTrend = months.map((_, idx) => {
-            const variation = Math.random() * 5 - 2.5; // ±2.5
+            const variation = Math.random() * 5 - 2.5;
             const base = talents.reduce((acc,t)=>acc+t.score,0)/talents.length;
             return Math.max(65, Math.min(99, base + variation));
         });
 
-        // Dados de roles para bar chart
         const rolesCount = {};
         talents.forEach(t => {
             const role = t.role || 'Unknown';
             rolesCount[role] = (rolesCount[role] || 0) + 1;
         });
 
-        new Chart(ctx, {
+        const chartData = {
             type: 'bar',
             data: {
                 labels: Object.keys(rolesCount),
@@ -134,28 +134,29 @@ async function populateDashboardAdvanced() {
                 plugins: { legend: { labels: { color: '#c9d1d9' } } },
                 scales: {
                     x: { ticks: { color: '#8b949e' } },
-                    y: {
-                        type: 'linear',
-                        position: 'left',
-                        ticks: { color: '#8b949e', beginAtZero: true }
-                    },
-                    y1: {
-                        type: 'linear',
-                        position: 'right',
-                        ticks: { color: '#3fb950' },
-                        grid: { drawOnChartArea: false },
-                        min: 65,
-                        max: 99
-                    }
+                    y: { type: 'linear', position: 'left', ticks: { color: '#8b949e', beginAtZero: true } },
+                    y1: { type: 'linear', position: 'right', ticks: { color: '#3fb950' }, grid: { drawOnChartArea: false }, min: 65, max: 99 }
                 }
             }
-        });
+        };
+
+        if (dashboardChart) {
+            // Atualiza dados existentes
+            dashboardChart.data = chartData.data;
+            dashboardChart.update();
+        } else {
+            // Cria novo gráfico
+            dashboardChart = new Chart(ctx, chartData);
+        }
     }
 }
 
 /* ===============================
-   EXECUTAR AO CARREGAR A PÁGINA
+   ATUALIZAÇÃO AUTOMÁTICA
 ================================= */
+const REFRESH_INTERVAL = 10000; // 10 segundos
+
 document.addEventListener('DOMContentLoaded', () => {
     populateDashboardAdvanced();
+    setInterval(populateDashboardAdvanced, REFRESH_INTERVAL);
 });
