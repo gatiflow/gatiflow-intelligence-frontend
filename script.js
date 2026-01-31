@@ -68,22 +68,77 @@ function initChart(initialData) {
 }
 
 /* ===============================
+   INSIGHTS EM TEMPO REAL
+================================= */
+// Cria container no dashboard para insights
+const dashboardContainer = document.querySelector('.dashboard-demo');
+
+let insightsContainer = document.getElementById('insightsContainer');
+if (!insightsContainer) {
+    insightsContainer = document.createElement('div');
+    insightsContainer.id = 'insightsContainer';
+    insightsContainer.style.marginTop = '20px';
+    insightsContainer.style.backgroundColor = '#161b22';
+    insightsContainer.style.padding = '15px';
+    insightsContainer.style.borderRadius = '8px';
+    insightsContainer.style.maxHeight = '200px';
+    insightsContainer.style.overflowY = 'auto';
+    insightsContainer.innerHTML = `<h4 style="color:#58a6ff;margin-bottom:10px;">Strategic Insights (Real-Time)</h4>`;
+    dashboardContainer.appendChild(insightsContainer);
+}
+
+function updateInsights(newTalents) {
+    const insights = newTalents.map(t => {
+        let text = `${t.username} (${t.role}) score: ${t.score}`;
+        if (t.score >= 90) text += ' → Liderança técnica detectada';
+        else if (t.score >= 80) text += ' → Sênior';
+        else if (t.score >= 70) text += ' → Pleno';
+        else text += ' → Júnior';
+        return text;
+    });
+
+    // Remove insights antigos
+    Array.from(insightsContainer.querySelectorAll('p')).forEach(p => p.remove());
+
+    // Adiciona apenas os 5 últimos insights
+    insights.slice(-5).reverse().forEach(text => {
+        const p = document.createElement('p');
+        p.textContent = text;
+        p.style.color = '#c9d1d9';
+        p.style.margin = '4px 0';
+        insightsContainer.appendChild(p);
+    });
+}
+
+/* ===============================
+   DASHBOARD UPDATE (GRÁFICO)
+================================= */
+function updateDashboard(talents) {
+    const pythonAI = talents.map(t => t.score);
+    const dataEng = talents.map(t => t.score - 5);
+
+    if (demandChart) {
+        demandChart.data.datasets[0].data = pythonAI;
+        demandChart.data.datasets[1].data = dataEng;
+        demandChart.update();
+    }
+}
+
+/* ===============================
    WEBSOCKET REAL-TIME
 ================================= */
 function connectWebSocket() {
     const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
     const ws = new WebSocket(`${protocol}://${window.location.host}/ws`);
 
-    ws.onopen = () => {
-        console.log('WebSocket connected for real-time updates');
-    };
+    ws.onopen = () => console.log('WebSocket connected for real-time updates');
 
     ws.onmessage = event => {
         const msg = JSON.parse(event.data);
-
         if (msg.event === 'update' && msg.talents) {
             console.log('Received new talent data:', msg.talents);
             updateDashboard(msg.talents);
+            updateInsights(msg.talents);
         }
     };
 
@@ -96,19 +151,6 @@ function connectWebSocket() {
         console.error('WebSocket error:', err);
         ws.close();
     };
-}
-
-function updateDashboard(talents) {
-    // Exemplo simples: atualizar gráficos com novos valores
-    // Aqui vamos apenas simular novos dados para Python/AI e Data Engineering
-    const pythonAI = talents.map(t => t.score);       // score como proxy
-    const dataEng = talents.map(t => t.score - 5);    // leve variação
-
-    if (demandChart) {
-        demandChart.data.datasets[0].data = pythonAI;
-        demandChart.data.datasets[1].data = dataEng;
-        demandChart.update();
-    }
 }
 
 // Inicializa WebSocket
