@@ -18,13 +18,76 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,san
 /* ===============================
    COMPLIANCE BADGE FIXO
 ================================= */
-.compliance-badge-fixed{position:fixed;top:20px;right:20px;background:rgba(35,134,54,0.15);border:2px solid var(--success);padding:8px 16px;border-radius:24px;font-size:0.75em;font-weight:600;color:var(--success);z-index:1000;backdrop-filter:blur(10px);display:flex;align-items:center;gap:6px;}
+.compliance-badge-fixed{
+    position:fixed;
+    top:20px;
+    right:20px;
+    background:rgba(35,134,54,0.15);
+    border:2px solid var(--success);
+    padding:8px 16px;
+    border-radius:24px;
+    font-size:0.75em;
+    font-weight:600;
+    color:var(--success);
+    z-index:1000;
+    backdrop-filter:blur(10px);
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
 .compliance-badge-fixed::before{content:"✓";font-weight:bold;font-size:1.2em;}
 
 /* ===============================
-   HERO, BUTTONS, STEPS, CARDS
-   (Mantido conforme versão anterior)
+   HEADER / HERO
 ================================= */
+header .container{padding:20px;display:flex;justify-content:center;align-items:center;}
+.hero{padding:60px 20px;text-align:center;}
+.hero h1{font-size:2.2em;line-height:1.2;margin-bottom:10px;}
+.hero .tagline{font-size:1em;color:var(--text-muted);}
+.hero .subtitle{margin-top:10px;font-size:0.9em;color:var(--text-muted);}
+.cta-group{margin-top:20px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;}
+
+/* ===============================
+   BUTTONS
+================================= */
+.btn{padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:600;transition:all 0.2s ease;}
+.btn-primary{background:var(--accent);color:#fff;}
+.btn-primary:hover{background:var(--accent-hover);}
+.btn-secondary{background:transparent;color:var(--accent);border:2px solid var(--accent);}
+.btn-secondary:hover{background:var(--accent);color:#fff;}
+
+/* ===============================
+   TRUST BAR
+================================= */
+.trust-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-top:30px;}
+.trust-item{background:var(--card);padding:12px;border-radius:8px;text-align:center;}
+.trust-item .icon{font-size:1.5em;margin-bottom:6px;}
+
+/* ===============================
+   STEPS
+================================= */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:30px;}
+.step{background:var(--card);padding:15px;border-radius:8px;transition:all 0.3s ease;}
+.step:hover{background:var(--card-hover);transform:translateY(-3px);}
+
+/* ===============================
+   DASHBOARD / CARDS
+================================= */
+.dashboard-demo{margin-top:30px;}
+.dashboard-header{display:flex;flex-direction:column;align-items:center;margin-bottom:20px;}
+.data-source-badge{font-size:0.8em;color:var(--text-muted);}
+.chart-container{width:100%;height:250px;margin-bottom:20px;}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-top:15px;}
+.stat-card{background:var(--card);padding:12px;border-radius:8px;text-align:center;transition:all 0.3s ease;}
+.stat-card:hover{transform:translateY(-3px);box-shadow:0 4px 10px rgba(0,0,0,0.3);}
+.stat-value{font-size:1.2em;font-weight:700;}
+.stat-label{font-size:0.85em;color:var(--text-muted);}
+
+/* ===============================
+   INSIGHTS & OPPORTUNITIES
+================================= */
+#insightsContainer, #opportunitiesContainer{width:100%;margin-top:15px;}
+#opportunitiesContainer{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
 
 /* ===============================
    LEAD MODAL
@@ -35,12 +98,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,san
 #leadModal button{width:100%;display:block;text-align:center;}
 
 /* ===============================
-   RESPONSIVO
+   RESPONSIVO MOBILE-FIRST
 ================================= */
 @media(max-width:768px){
-  .hero h1{font-size:2em;}
-  .hero .tagline{font-size:1.1em;}
-  .compliance-badge-fixed{position:static;margin:20px auto;width:fit-content;}
-  section{padding:50px 0;}
-  .chart-container{height:250px;}
+    .hero h1{font-size:1.8em;}
+    .hero .tagline, .hero .subtitle{font-size:0.9em;}
+    .compliance-badge-fixed{position:static;margin:15px auto;width:fit-content;}
+    .steps{grid-template-columns:1fr;}
+    .trust-bar{grid-template-columns:1fr;}
+    .chart-container{height:220px;}
+    .stats-grid{grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;}
+    #opportunitiesContainer{grid-template-columns:1fr;}
+    .stat-value{font-size:1em;}
+    .stat-label{font-size:0.75em;}
 }
