@@ -6,226 +6,156 @@ const modal = document.getElementById('leadModal');
 const closeModal = document.getElementById('closeModal');
 const leadForm = document.getElementById('leadForm');
 
-leadButtons.forEach(btn => {
-    btn.addEventListener('click', e => {
+leadButtons.forEach(btn=>{
+    btn.addEventListener('click', e=>{
         e.preventDefault();
-        modal.style.display = 'flex';
+        modal.style.display='flex';
     });
 });
 
-closeModal.addEventListener('click', () => { modal.style.display = 'none'; });
-window.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
+if(closeModal){
+    closeModal.addEventListener('click', ()=>{modal.style.display='none';});
+}
 
-leadForm.addEventListener('submit', e => {
-    e.preventDefault();
-    const name = document.getElementById('leadName').value;
-    const email = document.getElementById('leadEmail').value;
-    const company = document.getElementById('leadCompany').value;
-
-    console.log({ name, email, company });
-    alert('Thank you! Your request has been received. We will contact you soon.');
-    leadForm.reset();
-    modal.style.display = 'none';
+window.addEventListener('click', e=>{
+    if(e.target===modal) modal.style.display='none';
 });
 
-/* ===============================
-   CHART.JS DEMO WITH BADGES
-================================= */
-const ctx = document.getElementById('demandChart')?.getContext('2d');
-let demandChart;
+if(leadForm){
+    leadForm.addEventListener('submit', e=>{
+        e.preventDefault();
+        const name=document.getElementById('leadName').value;
+        const email=document.getElementById('leadEmail').value;
+        const company=document.getElementById('leadCompany').value;
 
-function initChart(initialData) {
-    demandChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-            datasets: [
+        console.log({name,email,company});
+
+        alert('Thank you! Your request has been received. We will contact you soon.');
+        leadForm.reset();
+        modal.style.display='none';
+    });
+}
+
+/* ===============================
+   CHART.JS — REAL-TIME DEMO
+================================= */
+const ctx=document.getElementById('demandChart')?.getContext('2d');
+let demandChart=null;
+
+if(ctx){
+    demandChart=new Chart(ctx,{
+        type:'line',
+        data:{
+            labels:['Jan','Feb','Mar','Apr','May','Jun'],
+            datasets:[
                 {
-                    label: 'Python/AI',
-                    data: initialData.pythonAI,
-                    borderColor: '#3fb950',
-                    backgroundColor: 'rgba(63,185,80,0.1)',
-                    tension: 0.4,
-                    fill: true
+                    label:'Python / AI',
+                    data:[65,72,78,85,89,92],
+                    borderColor:'#3fb950',
+                    backgroundColor:'rgba(63,185,80,0.15)',
+                    tension:0.4,
+                    fill:true
                 },
                 {
-                    label: 'Data Engineering',
-                    data: initialData.dataEng,
-                    borderColor: '#58a6ff',
-                    backgroundColor: 'rgba(88,166,255,0.1)',
-                    tension: 0.4,
-                    fill: true
+                    label:'Data Engineering',
+                    data:[50,55,60,65,70,73],
+                    borderColor:'#58a6ff',
+                    backgroundColor:'rgba(88,166,255,0.15)',
+                    tension:0.4,
+                    fill:true
                 }
             ]
         },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: { labels: { color: '#c9d1d9' } },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            const score = context.raw;
-                            let badge = '';
-                            if (score >= 90) badge = ' 🏆 Liderança';
-                            else if (score >= 80) badge = ' ⭐ Sênior';
-                            else if (score >= 70) badge = ' ⚡ Pleno';
-                            else badge = ' 🔹 Júnior';
-                            return `${context.dataset.label}: ${score}${badge}`;
-                        }
-                    }
-                }
+        options:{
+            responsive:true,
+            maintainAspectRatio:false,
+            plugins:{
+                legend:{labels:{color:'#c9d1d9'}}
             },
-            scales: { x: { ticks: { color: '#8b949e' } }, y: { ticks: { color: '#8b949e' } } }
+            scales:{
+                x:{ticks:{color:'#8b949e'}},
+                y:{ticks:{color:'#8b949e'}}
+            }
         }
     });
 }
 
 /* ===============================
-   INSIGHTS & OPPORTUNITIES CARDS
+   REAL-TIME SIGNAL SIMULATION
 ================================= */
-const dashboardContainer = document.querySelector('.dashboard-demo');
-let insightsContainer = document.getElementById('insightsContainer');
-let opportunitiesContainer = document.getElementById('opportunitiesContainer');
+const insightsContainer=document.getElementById('insightsContainer');
+const opportunitiesContainer=document.getElementById('opportunitiesContainer');
 
-// Cria container de insights
-if (!insightsContainer) {
-    insightsContainer = document.createElement('div');
-    insightsContainer.id = 'insightsContainer';
-    insightsContainer.style.marginTop = '20px';
-    insightsContainer.style.backgroundColor = '#161b22';
-    insightsContainer.style.padding = '15px';
-    insightsContainer.style.borderRadius = '8px';
-    insightsContainer.style.maxHeight = '220px';
-    insightsContainer.style.overflowY = 'auto';
-    insightsContainer.innerHTML = `<h4 style="color:#58a6ff;margin-bottom:10px;">Strategic Insights (Real-Time)</h4>`;
-    dashboardContainer.appendChild(insightsContainer);
+const insightsPool=[
+    'Hiring surge detected for Senior Python Engineers',
+    'AI adoption accelerating in Fintech sector',
+    'Remote Data Engineers demand increased by 12%',
+    'Enterprise hiring cycles shortening globally',
+    'ML Ops roles showing strong quarter growth'
+];
+
+const opportunitiesPool=[
+    {title:'Senior AI Engineer',company:'Fintech Global',growth:'+28%'},
+    {title:'Data Platform Lead',company:'SaaS Unicorn',growth:'+21%'},
+    {title:'ML Engineer',company:'HealthTech Scale-up',growth:'+34%'},
+    {title:'Python Architect',company:'Enterprise Cloud',growth:'+18%'}
+];
+
+function addInsight(){
+    if(!insightsContainer) return;
+    const div=document.createElement('div');
+    div.className='step';
+    div.textContent=insightsPool[Math.floor(Math.random()*insightsPool.length)];
+    insightsContainer.prepend(div);
+    if(insightsContainer.children.length>5){
+        insightsContainer.removeChild(insightsContainer.lastChild);
+    }
 }
 
-// Cria container de oportunidades
-if (!opportunitiesContainer) {
-    opportunitiesContainer = document.createElement('div');
-    opportunitiesContainer.id = 'opportunitiesContainer';
-    opportunitiesContainer.style.marginTop = '20px';
-    opportunitiesContainer.style.display = 'grid';
-    opportunitiesContainer.style.gridTemplateColumns = 'repeat(auto-fit, minmax(220px, 1fr))';
-    opportunitiesContainer.style.gap = '12px';
-    dashboardContainer.appendChild(opportunitiesContainer);
-}
-
-function getBadge(score) {
-    if (score >= 90) return { label: '🏆 Liderança', color: '#ffdd57' };
-    if (score >= 80) return { label: '⭐ Sênior', color: '#3fb950' };
-    if (score >= 70) return { label: '⚡ Pleno', color: '#58a6ff' };
-    return { label: '🔹 Júnior', color: '#8b949e' };
-}
-
-function updateInsights(newTalents) {
-    // Limpa insights antigos
-    Array.from(insightsContainer.querySelectorAll('p')).forEach(p => p.remove());
-
-    newTalents.slice(-5).reverse().forEach(t => {
-        const badge = getBadge(t.score);
-        const p = document.createElement('p');
-        p.innerHTML = `<strong>${t.username}</strong> (${t.role}) - ${t.score} <span style="color:${badge.color}">${badge.label}</span>`;
-        p.style.color = '#c9d1d9';
-        p.style.margin = '4px 0';
-        p.style.transition = 'all 0.3s ease';
-        insightsContainer.appendChild(p);
-    });
-}
-
-function updateOpportunities(newTalents) {
-    // Limpa oportunidades antigas
-    opportunitiesContainer.innerHTML = '';
-    
-    newTalents.slice(-6).reverse().forEach(t => {
-        const badge = getBadge(t.score);
-        const card = document.createElement('div');
-        card.style.backgroundColor = '#161b22';
-        card.style.border = `2px solid ${badge.color}`;
-        card.style.borderRadius = '10px';
-        card.style.padding = '12px';
-        card.style.color = '#c9d1d9';
-        card.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
-        card.style.cursor = 'pointer';
-        card.onmouseover = () => {
-            card.style.transform = 'translateY(-5px)';
-            card.style.boxShadow = `0 6px 12px ${badge.color}50`;
-        };
-        card.onmouseleave = () => {
-            card.style.transform = 'translateY(0)';
-            card.style.boxShadow = 'none';
-        };
-        card.innerHTML = `
-            <h4 style="margin-bottom:6px;">${t.username}</h4>
-            <p style="margin-bottom:6px;">${t.role} - Score: ${t.score} <span style="color:${badge.color}">${badge.label}</span></p>
-            <p style="font-size:0.85em;color:#8b949e;">Top skills: ${t.skills.join(', ')}</p>
-        `;
-        opportunitiesContainer.appendChild(card);
-    });
+function addOpportunity(){
+    if(!opportunitiesContainer) return;
+    const card=document.createElement('div');
+    card.className='stat-card';
+    const opp=opportunitiesPool[Math.floor(Math.random()*opportunitiesPool.length)];
+    card.innerHTML=`
+        <div class="stat-value">${opp.title}</div>
+        <div class="stat-label">${opp.company}</div>
+        <div style="margin-top:6px;color:#3fb950;font-weight:600">${opp.growth}</div>
+    `;
+    opportunitiesContainer.prepend(card);
+    if(opportunitiesContainer.children.length>4){
+        opportunitiesContainer.removeChild(opportunitiesContainer.lastChild);
+    }
 }
 
 /* ===============================
-   DASHBOARD UPDATE
+   LIVE DATA UPDATES
 ================================= */
-function updateDashboard(talents) {
-    const pythonAI = talents.map(t => t.score);
-    const dataEng = talents.map(t => t.score - 5);
+setInterval(()=>{
+    addInsight();
+    addOpportunity();
 
-    if (demandChart) {
-        demandChart.data.datasets[0].data = pythonAI;
-        demandChart.data.datasets[1].data = dataEng;
+    if(demandChart){
+        demandChart.data.datasets.forEach(ds=>{
+            const variation=Math.floor(Math.random()*3);
+            ds.data.push(ds.data[ds.data.length-1]+variation);
+            if(ds.data.length>6) ds.data.shift();
+        });
+
+        demandChart.data.labels.push('Now');
+        if(demandChart.data.labels.length>6) demandChart.data.labels.shift();
+
         demandChart.update();
     }
-
-    updateInsights(talents);
-    updateOpportunities(talents);
-}
+},5000);
 
 /* ===============================
-   WEBSOCKET REAL-TIME
+   COMPLIANCE STATUS PULSE
 ================================= */
-function connectWebSocket() {
-    const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
-    const ws = new WebSocket(`${protocol}://${window.location.host}/ws`);
-
-    ws.onopen = () => console.log('WebSocket connected for real-time updates');
-
-    ws.onmessage = event => {
-        const msg = JSON.parse(event.data);
-        if (msg.event === 'update' && msg.talents) {
-            console.log('Received new talent data:', msg.talents);
-            updateDashboard(msg.talents);
-        }
-    };
-
-    ws.onclose = () => {
-        console.log('WebSocket disconnected. Reconnecting in 5s...');
-        setTimeout(connectWebSocket, 5000);
-    };
-
-    ws.onerror = err => {
-        console.error('WebSocket error:', err);
-        ws.close();
-    };
+const badge=document.querySelector('.compliance-badge-fixed');
+if(badge){
+    setInterval(()=>{
+        badge.style.boxShadow='0 0 12px rgba(63,185,80,0.8)';
+        setTimeout(()=>badge.style.boxShadow='none',600);
+    },4000);
 }
-
-// Inicializa WebSocket
-connectWebSocket();
-
-// Inicializa gráfico com dados fictícios iniciais
-initChart({
-    pythonAI: [65, 72, 78, 85, 89, 92],
-    dataEng: [50, 55, 60, 65, 70, 73]
-});
-
-// Inicializa insights e oportunidades com dados fictícios
-updateDashboard([
-    { username: 'Alice', role: 'AI Engineer', score: 92, skills: ['Python','TensorFlow','PyTorch'] },
-    { username: 'Bob', role: 'Data Engineer', score: 85, skills: ['SQL','Spark','Airflow'] },
-    { username: 'Charlie', role: 'Full Stack Dev', score: 78, skills: ['React','Node.js','Docker'] },
-    { username: 'Dana', role: 'Backend Engineer', score: 88, skills: ['Python','Django','PostgreSQL'] },
-    { username: 'Eve', role: 'DevOps', score: 95, skills: ['AWS','Kubernetes','Terraform'] },
-    { username: 'Frank', role: 'Frontend Engineer', score: 70, skills: ['Vue.js','Tailwind','HTML/CSS'] }
-]);
